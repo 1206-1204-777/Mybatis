@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/your_database_name
+    username: your_username
+    password: your_password
+    driver-class-name: org.postgresql.Driver
+
+mybatis:
+  type-aliases-package: com.example.demo.model
+  mapper-locations: classpath:mapper/*.xml
+
+# ログやSQL出力を見たい場合
+logging:
+  level:
+    root: INFO
+    com.example.demo: DEBUG
+    org.mybatis: DEBUG
