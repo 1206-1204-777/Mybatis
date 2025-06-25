@@ -1,17 +1,16 @@
 package com.example.doma.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import lombok.Data;
 
 @Data
-public class Products {
+public class Customers {
+
 	private Integer id;
 	private String name;
-	private String description ;
-	private BigDecimal price;
-	private Integer stock;
+	private String email;
+	private String phone;
+	private String address;
 	private LocalDateTime createdAt;
-	
 }
