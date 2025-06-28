@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.doma.mapper.CustomerMapper">
+
+<!--顧客登録-->
+    <insert id="insertCustomer" parameterType="com.example.doma.entity.Customers">
+        INSERT INTO customers (name, email, phone,address,created_at)
+        VALUES (#{name}, #{email}, #{phone}, #{address}, CURRENT_TIMESTAMP)
+    </insert>
+<!--顧客検索(名前で部分一致)-->
+    <select id="findByName" parameterType="String" resultType="com.example.doma.entity.Customers">
+        SELECT id, name, email, phone, address, created_at
+        FROM customers
+        WHERE name ILIKE '%' || #{name} || '%'
+    </select>
+
+</mapper>
