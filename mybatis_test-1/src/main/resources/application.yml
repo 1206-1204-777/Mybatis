@@ -1,17 +1,37 @@
 spring:
+  application:
+    name: mybatis-api
+    
   datasource:
-    url: jdbc:postgresql://localhost:5432/sampledb
+    # 勤怠アプリと同じDB接続情報をコピー
+    url: jdbc:postgresql://localhost:5432/kintaiapp
     username: postgres
     password: Qwen@1204
     driver-class-name: org.postgresql.Driver
+    
+    # HikariCP設定（コネクションプール）
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000
+      validation-timeout: 5000
+      idle-timeout: 300000
+      max-lifetime: 1200000
 
+# MyBatis設定
 mybatis:
-  type-aliases-package: com.example.demo.model
   mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.mybatis.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-# ログやSQL出力を見たい場合
+# サーバーポート（勤怠アプリと重複しないよう）
+server:
+  port: 8081
+
+# ログレベル設定
 logging:
   level:
-    root: INFO
-    com.example.demo: DEBUG
-    org.mybatis: DEBUG
+    com.example.mybatis: DEBUG
+    org.springframework.jdbc: DEBUG
