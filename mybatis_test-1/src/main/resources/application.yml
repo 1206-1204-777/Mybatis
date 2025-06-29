@@ -17,7 +17,17 @@ spring:
       validation-timeout: 5000
       idle-timeout: 300000
       max-lifetime: 1200000
-
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: gribeiku@gmail.com
+    password: bnyy yubm fdbp ltte
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 # MyBatis設定
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -29,6 +39,11 @@ mybatis:
 # サーバーポート（勤怠アプリと重複しないよう）
 server:
   port: 8081
+# JWT設定（追加）
+# 勤怠アプリと完全に同じ値
+jwt:
+  secret: 6Ot3gItnxRxZMgSVb42J1oNwCkfgvqOSAt/AomRiEFY=
+  expiration: 86400000
 
 # ログレベル設定
 logging:
