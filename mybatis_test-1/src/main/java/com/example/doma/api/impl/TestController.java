@@ -10,92 +10,43 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.common.dto.common.ApiResponse;  // ←新しいimport
 import com.example.doma.mapper.UserTestMapper;
 
 @RestController
 @RequestMapping("/api/test")
-@CrossOrigin(origins =  "*")
+@CrossOrigin(origins = "*")
 public class TestController {
 
     @Autowired
     private UserTestMapper userTestMapper;
 
-    // 基本的な接続確認
     @GetMapping("/connection")
-    public Map<String, Object> testConnection() {
-        Map<String, Object> result = new HashMap<>();
-        
+    public ApiResponse<Map<String, Object>> testConnection() {  // ←戻り値型変更
         try {
-            // ユーザー数取得
             Integer userCount = userTestMapper.countUsers();
-            result.put("success", true);
-            result.put("userCount", userCount);
-            result.put("message", "勤怠アプリDBへの接続成功！");
+            Map<String, Object> data = new HashMap<>();
+            data.put("userCount", userCount);
+            data.put("status", "connected");
+            data.put("databaseName", "attendance_db");
+            
+            return ApiResponse.success(data, "勤怠アプリDBへの接続成功！");
             
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("error", e.getMessage());
-            result.put("message", "勤怠アプリDBへの接続失敗");
+            return ApiResponse.error("CONNECTION_ERROR", 
+                "勤怠アプリDBへの接続失敗", e.getMessage());
         }
-        
-        return result;
     }
 
-    // テーブル一覧確認
     @GetMapping("/tables")
-    public Map<String, Object> getTables() {
-        Map<String, Object> result = new HashMap<>();
-        
+    public ApiResponse<List<String>> getTables() {  // ←戻り値型変更
         try {
             List<String> tables = userTestMapper.getTableNames();
-            result.put("success", true);
-            result.put("tables", tables);
-            result.put("message", "テーブル一覧取得成功");
+            return ApiResponse.success(tables, "テーブル一覧取得成功");
             
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("error", e.getMessage());
+            return ApiResponse.error("QUERY_ERROR", 
+                "テーブル一覧取得失敗", e.getMessage());
         }
-        
-        return result;
-    }
-
-    // usersテーブル構造確認
-    @GetMapping("/users/structure")
-    public Map<String, Object> getUserStructure() {
-        Map<String, Object> result = new HashMap<>();
-        
-        try {
-            List<Map<String, Object>> columns = userTestMapper.getUserColumns();
-            result.put("success", true);
-            result.put("columns", columns);
-            result.put("message", "usersテーブル構造取得成功");
-            
-        } catch (Exception e) {
-            result.put("success", false);
-            result.put("error", e.getMessage());
-        }
-        
-        return result;
-    }
-
-    // サンプルユーザーデータ確認
-    @GetMapping("/users/sample")
-    public Map<String, Object> getSampleUsers() {
-        Map<String, Object> result = new HashMap<>();
-        
-        try {
-            List<Map<String, Object>> users = userTestMapper.getSampleUsers();
-            result.put("success", true);
-            result.put("users", users);
-            result.put("count", users.size());
-            result.put("message", "サンプルユーザーデータ取得成功");
-            
-        } catch (Exception e) {
-            result.put("success", false);
-            result.put("error", e.getMessage());
-        }
-        
-        return result;
     }
 }
