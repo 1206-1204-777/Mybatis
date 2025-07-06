@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.UserMapper">
+<mapper namespace="com.example.doma.mapper.UserMapper">
 
 <!--resultMap定義-->
 <resultMap id="UserResultMap" type="com.example.doma.entity.UserEntity">
@@ -30,20 +30,20 @@
 
 <!--単一取得-->
 <select id="selectById" resultMap="UserResultMap">
-    SELECT id, username, password, email, role, location_id, created_at, default_start_time, default_end_time
+    SELECT id, username, password, email, role, location_id, default_start_time, default_end_time
     FROM users
     WHERE id = #{id}
 </select>
 <!--全件取得-->
 <select id="selectAll" resultMap="UserResultMap">
-    SELECT id, username, password, email, role, location_id, created_at, default_start_time, default_end_time
+    SELECT id, username, password, email, role, location_id, default_start_time, default_end_time
     FROM users
     ORDER BY id ASC
 </select>
 
 <!--挿入-->
 <insert id="insert" parameterType="com.example.doma.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO users (username, password, email, role, location_id, created_at, default_start_time, default_end_time)
+    INSERT INTO users (username, password, email, role, location_id, default_start_time, default_end_time)
     VALUES (#{username}, #{password}, #{email}, #{role}, #{location_id}, #{createdAt}, #{default_start_time}, #{default_end_time})
 </insert>
 
@@ -70,14 +70,14 @@
 
 <!--ユーザー名での検索-->
 <select id="selectByUsername" resultMap="UserResultMap">
-    SELECT id, username, password, email, role, location_id, created_at, default_start_time, default_end_time
+    SELECT id, username, password, email, role, location_id, default_start_time, default_end_time
     FROM users
     WHERE username = #{username}
 </select>   
 
 <!--メールアドレスでの検索-->
 <select id="selectByEmail" resultMap="UserResultMap">
-    SELECT id, username, password, email, role, location_id, created_at, default_start_time, default_end_time
+    SELECT id, username, password, email, role, location_id, default_start_time, default_end_time
     FROM users
     WHERE email = #{email}
 </select>
