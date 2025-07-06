@@ -1,0 +1,7 @@
+f829b54 HEAD@{0}: commit: UserEntityの移行を開始
+c6afbcb HEAD@{1}: reset: moving to HEAD~1
+8bfc31b HEAD@{2}: checkout: moving from 3c0d7c8da7ccac28e6ed7fadb84814a8c4dba8df to Change/Collaboration_with_other_services
+3c0d7c8 HEAD@{3}: commit: UserEntityの置き換えを開始
+c6afbcb HEAD@{4}: checkout: moving from Change/Collaboration_with_other_services to origin/Change/Collaboration_with_other_services
+8bfc31b HEAD@{5}: commit: db操作のテストを実施
+c6afbcb HEAD@{6}: clone: from C:/Users/gribe/OneDrive/Desktop/修復
