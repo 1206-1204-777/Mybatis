@@ -38,7 +38,7 @@ public interface UserMapper {
 	List<UserEntity> selectByLocationId(@Param("locationId") Long locationId);//ユーザーの勤務地情報を取得
 	
 	//ページネーション対応
-	List<UserEntity> selectWithPaging(@Param("offset")int offset,@Param("Limit") int Limit);// ページ数取得
+	List<UserEntity> selectWithPaging(@Param("offset")int offset,@Param("limit") int limit);// ページ数取得
 	
 	long countUsers();//ユーザーの数を取得
 }

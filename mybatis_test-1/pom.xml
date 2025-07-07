@@ -110,6 +110,11 @@
 		    <version>3.1.1</version> <!-- 使用するバージョンを指定してください -->
 		</dependency>
 
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		    <version>2.0.2</version>
+		</dependency>
 		
 	</dependencies>
 
