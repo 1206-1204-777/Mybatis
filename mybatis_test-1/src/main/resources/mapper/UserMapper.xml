@@ -9,16 +9,15 @@
     <result column="password" property="password" />
     <result column="email" property="email" />
     <result column="role" property="role" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-    <result column="locationId" property="location_id" />
-    <result column="created_at" property="createdAt" />
-    <result column="defaultStartTime" property="default_start_time" />
-    <result column="defaultEndTime" property="default_end_time" />
+    <result column="location_id" property="locationId" />
+    <result column="default_start_time" property="defaultStartTime" />
+    <result column="default_end_time" property="defaultEndTime" />
 </resultMap>
 
 <!--Location付きのresultMap-->
 <resultMap id="UserWithLocationResultMap" type="com.example.doma.entity.UserEntity" extends="UserResultMap">
     <association property="location" javaType="com.example.doma.entity.LocationEntity">
-            <id property="id" column="location_id"/>
+            <id property="id" column="loc_id"/>
             <result property="name" column="location_name"/>
             <result property="startTime" column="location_start_time"/>
             <result property="endTime" column="location_end_time"/>
@@ -44,7 +43,7 @@
 <!--挿入-->
 <insert id="insert" parameterType="com.example.doma.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO users (username, password, email, role, location_id, default_start_time, default_end_time)
-    VALUES (#{username}, #{password}, #{email}, #{role}, #{location_id}, #{createdAt}, #{default_start_time}, #{default_end_time})
+    VALUES (#{username}, #{password}, #{email}, #{role}, #{locationId}, #{createdAt}, #{defaultStartTime}, #{defaultEndTime})
 </insert>
 
 <!--更新-->
@@ -54,9 +53,9 @@
         password = #{password},
         email = #{email},
         role = #{role},
-        location_id = #{location_id},
-        default_start_time = #{default_start_time},
-        default_end_time = #{default_end_time}
+        location_id = #{locationId},
+        default_start_time = #{defaultStartTime},
+        default_end_time = #{defaultEndTime}
     WHERE id = #{id}
 </update>
 
@@ -91,26 +90,29 @@
 
 <!--ロール別検索-->
 <select id="selectByRole" resultMap="UserResultMap">
-    SELECT id, username, password, email, role, location_id, created_at, default_start_time, default_end_time
+    SELECT id, username, password, email, role, location_id,  default_start_time, default_end_time
     FROM users
     WHERE role = #{role}
     ORDER BY id ASC
 </select>
 
-<!--ロケーション別検索-->
+<!--ロケーション別検索（JOIN版）-->
 <select id="selectByLocationId" resultMap="UserWithLocationResultMap">
-    SELECT u.id, u.username, u.password, u.email, u.role, u.location_id, u.created_at, 
+    SELECT u.id, u.username, u.password, u.email, u.role, u.location_id, 
            u.default_start_time, u.default_end_time,
-           l.id AS location_id, l.name AS location_name, 
-           l.start_time AS location_start_time, l.end_time AS location_end_time,
+           l.id AS loc_id, 
+           l.name AS location_name, 
+           l.start_time AS location_start_time, 
+           l.end_time AS location_end_time,
            l.created_by AS location_created_by
-    FROM users
-    WHERE location_id = #{locationId}
-    ORDER BY id ASC
+    FROM users u
+    LEFT JOIN locations l ON u.location_id = l.id
+    WHERE u.location_id = #{locationId}
+    ORDER BY u.id ASC
 </select>
 <!--ページネーション-->
 <select id = "selectWithPaging" resultMap="UserResultMap">
-    SELECT id, username, password, email, role, location_id, created_at, default_start_time, default_end_time
+    SELECT id, username, password, email, role, location_id,  default_start_time, default_end_time
     FROM users
     ORDER BY id ASC
     LIMIT #{limit} OFFSET #{offset}

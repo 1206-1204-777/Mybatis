@@ -50,3 +50,15 @@ logging:
   level:
     com.example.mybatis: DEBUG
     org.springframework.jdbc: DEBUG
+
+# Swagger UI 設定
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    disable-swagger-default-url: true
+    tags-sorter: alpha
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

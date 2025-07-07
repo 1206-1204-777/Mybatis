@@ -3,6 +3,7 @@ package com.example.common.dto.response;
 import java.time.LocalTime;
 
 import com.example.common.enums.UserRole;
+import com.example.doma.entity.LocationEntity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class UserResponse {
 	private LocationResponse location;
 	private LocalTime defaultStartTime;
 	private LocalTime defaultEndTime;
+	private LocationEntity locationId;
 	
 	// roleの設定時に使う
 	public void setRole(UserRole role) {

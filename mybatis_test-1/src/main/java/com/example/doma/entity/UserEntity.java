@@ -16,7 +16,8 @@ public class UserEntity {
 	private String email;
 	private String password;
 	private UserRole role;
-	private Long LocationId;//勤務地ID
+	private Long locationId;//勤務地ID
 	private LocalTime defaultStartTime;
-	private LocalTime defaultendTime;
+	private LocalTime defaultEndTime;
+	private LocationEntity location;
 }

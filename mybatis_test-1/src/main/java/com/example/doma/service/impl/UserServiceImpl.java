@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.example.common.dto.request.UserRequest;
+import com.example.common.dto.response.LocationResponse;
 import com.example.common.dto.response.UserResponse;
 import com.example.common.enums.UserRole;
 import com.example.doma.entity.UserEntity;
@@ -180,8 +181,9 @@ public class UserServiceImpl implements UserService {
 		return users.stream()
 				.map(entity -> {
 					UserResponse response = mapper.map(entity, UserResponse.class);
-					if (entity != null) {
-						response.setRole(entity.getRole());
+					if (entity.getLocation() != null) {
+						LocationResponse locationResponse = mapper.map(entity.getLocationId(), LocationResponse.class);
+						response.setLocation(locationResponse);
 					}
 					return response;
 				})
